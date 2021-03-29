@@ -13,8 +13,8 @@ public interface FilesMapper {
     @Select("Select * from Files where fileid=#{Fileid} ")
     Files getFile(int Fileid);
 
-    @Insert("Insert into Files(filename,contenttype,filesize,filedata) values(#{filename},#{contenttype},#{filesize}" +
-            ",#{filedata})")
+    @Insert("Insert into Files(filename,contenttype,filesize,userid,filedata) values(#{filename},#{contenttype},#{filesize}" +
+            ",#{userid},#{filedata})")
     @Options(useGeneratedKeys = true,keyProperty = "fileid")
     int insertFile(Files files);
 
