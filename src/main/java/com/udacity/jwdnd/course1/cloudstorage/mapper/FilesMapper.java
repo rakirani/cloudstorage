@@ -18,9 +18,9 @@ public interface FilesMapper {
     @Options(useGeneratedKeys = true,keyProperty = "fileid")
     int insertFile(Files files);
 
-    @Delete("Delete * from files where fileid=#{fileid}")
+    @Delete("Delete from files where fileid=#{fileid}")
     void deleteFile(int fileid);
 
-    @Delete("Delete * from files where userid=#{userid}")
+    @Delete("Delete from files where userid=#{userid}")
     void deleteAllFiles(int userid);
 }

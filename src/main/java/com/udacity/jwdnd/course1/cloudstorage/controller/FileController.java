@@ -45,10 +45,10 @@ public class FileController {
        // return ResponseEntity.ok().contentType(new MediaType(files.getContenttype())) .contentLength(Long.parseLong(files.getFilesize())) .body(byteArrayResource);
     }
 
-    @DeleteMapping("/delete/{fileid}")
+    @GetMapping("/delete/{fileid}")
     public String deleteFiles(@PathVariable("fileid")Integer fileid,Authentication authentication){
         fileService.deleteFile(userService.getUser(authentication.getName()).getUserid());
-        return "home";
+        return "redirect:/result?success";
     }
 
 }
