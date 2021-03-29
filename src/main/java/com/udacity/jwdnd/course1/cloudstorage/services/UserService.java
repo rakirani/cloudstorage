@@ -19,8 +19,8 @@ public class UserService {
         this.hashService = hashService;
     }
 
-    public boolean isUserNameAvailable(String userName){
-        if (getUser(userName)==null){
+    public boolean isUserNameAvailable(String username){
+        if (getUser(username)==null){
             return true;
         }else
             return false;
@@ -32,14 +32,14 @@ public class UserService {
         random.nextBytes(salt);
         String encodedSalt = Base64.getEncoder().encodeToString(salt);
         String hashedPassword = hashService.getHashedValue(users.getPassword(), encodedSalt);
-        return userMapper.insertUsers(new Users(null,users.getUserName(),encodedSalt,hashedPassword,users.getFirstName(),users.getLastName()));
+        return userMapper.insertUsers(new Users(null,users.getUsername(),encodedSalt,hashedPassword,users.getFirstname(),users.getLastname()));
     }
-    public Users getUser(String userName){
-        return userMapper.getUser(userName);
+    public Users getUser(String username){
+        return userMapper.getUser(username);
     }
 
-    public void deleteUser(String userName){
-    userMapper.deleteUser(userName);
+    public void deleteUser(String username){
+    userMapper.deleteUser(username);
     }
 
 }

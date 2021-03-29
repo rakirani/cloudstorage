@@ -7,20 +7,20 @@ import java.util.List;
 @Mapper
 public interface CredentialsMapper {
 
-    @Select("Select * from Credentials where userId=#{userId}")
-    List<Credentials> getAllCredentials(int userId);
+    @Select("Select * from Credentials where userid=#{userid}")
+    List<Credentials> getAllCredentials(int userid);
 
-    @Select("Select * from Credentials where credentialId=#{credentialId}")
-    Credentials getCredentials(int credentialId);
+    @Select("Select * from Credentials where credentialid=#{credentialid}")
+    Credentials getCredentials(int credentialid);
 
-    @Insert("Insert into Credentials(url,userName,key,password) values(#{url},#{userName},#{key},#{password}) where userId=#{userId}")
-    @Options(useGeneratedKeys = true,keyProperty ="credentialId")
+    @Insert("Insert into Credentials(url,username,key,password) values(#{url},#{username},#{key},#{password}) where userid=#{userid}")
+    @Options(useGeneratedKeys = true,keyProperty ="credentialid")
     int insertCredentials(Credentials credentials);
 
-    @Delete("Delete * from Credentials where where credentialId=#{credentialId}")
-    void deleteCredentials(int credentialId);
+    @Delete("Delete * from Credentials where where credentialid=#{credentialid}")
+    void deleteCredentials(int credentialid);
 
-    @Delete("Delete * from Credentials where where userId=#{userId}")
-    void deleteAllCredentials(int userId);
+    @Delete("Delete * from Credentials where where userid=#{userid}")
+    void deleteAllCredentials(int userid);
 
 }

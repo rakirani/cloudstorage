@@ -26,7 +26,7 @@ public class SignupController {
     public String signupUser(@ModelAttribute Users users, Model model){
       String errorMsg=null;
 
-      if (!userService.isUserNameAvailable(users.getUserName())){
+      if (!userService.isUserNameAvailable(users.getUsername())){
           errorMsg= "The username already exists.";
       }
       if (errorMsg==null){
@@ -38,11 +38,8 @@ public class SignupController {
       if (errorMsg==null){
           model.addAttribute("signupSuccess",true);
       }else {
-          model.addAttribute("signupError",errorMsg);
+          model.addAttribute("errorMsg",errorMsg);
       }
       return "signup";
   }
-
-
-
 }

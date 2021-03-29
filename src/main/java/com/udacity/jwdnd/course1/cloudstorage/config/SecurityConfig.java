@@ -6,12 +6,18 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private AuthenticationService authenticationService;
+
+    public SecurityConfig(AuthenticationService authenticationService){
+        this.authenticationService=authenticationService;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(this.authenticationService);
@@ -20,9 +26,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+
         http.authorizeRequests()
-                .antMatchers("/signup", "/login").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/signup", "/login","/css/**","/js/**","/h2/**").permitAll()
+                .anyRequest().authenticated().and().logout()
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout");
 
         http.formLogin()
                 .loginPage("/login")

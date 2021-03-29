@@ -17,4 +17,10 @@ public class LoginController {
         return "login";
     }
 
-}
+    @GetMapping("/logout")
+      public String logOutPage(){
+          return "redirect:/login?logout";
+        }
+    }
+
+
