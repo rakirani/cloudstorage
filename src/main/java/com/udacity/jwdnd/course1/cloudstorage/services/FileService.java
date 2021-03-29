@@ -44,4 +44,7 @@ public class FileService {
         fileMapper.insertFile(files);
     }
 
+    public void deleteFile(Integer fileid){
+        fileMapper.deleteFile(fileid);
+    }
 }

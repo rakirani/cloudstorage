@@ -35,11 +35,20 @@ public class FileController {
         return "redirect:/result?success";
     }
 
-    @GetMapping("/view")
-    public ResponseEntity<ByteArrayResource> viewFile(@RequestParam("fileid") Integer fileid){
+    @GetMapping("/view/{fileid}")
+    public ResponseEntity<ByteArrayResource> viewFile(@PathVariable("fileid") Integer fileid){
         Files files=fileService.findFile(fileid);
         ByteArrayResource byteArrayResource=new ByteArrayResource(files.getFiledata());
-        return ResponseEntity.ok().contentType(new MediaType(files.getContenttype())) .contentLength(Long.parseLong(files.getFilesize())) .body(byteArrayResource);
+
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(files.getContenttype())) .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + files.getFilename() + "\"") .body(new ByteArrayResource(files.getFiledata()));
+
+       // return ResponseEntity.ok().contentType(new MediaType(files.getContenttype())) .contentLength(Long.parseLong(files.getFilesize())) .body(byteArrayResource);
+    }
+
+    @DeleteMapping("/delete/{fileid}")
+    public String deleteFiles(@PathVariable("fileid")Integer fileid,Authentication authentication){
+        fileService.deleteFile(userService.getUser(authentication.getName()).getUserid());
+        return "home";
     }
 
 }
