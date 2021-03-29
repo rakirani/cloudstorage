@@ -13,9 +13,9 @@ public interface NotesMapper {
     @Select("Select * from Notes where noteid=#{noteid}")
     Notes getOneNote(int noteid);
 
-    @Insert("Insert into Notes(notetitle,notedescription) values(#{notetitle},#{notedescription}) where userid=#{userid}")
+    @Insert("Insert into Notes(notetitle,notedescription,userid) values(#{notetitle},#{notedescription},#{userid}) where userid=#{userid}")
     @Options(useGeneratedKeys = true,keyProperty = "noteid")
-        int insertNotes(Notes notes);
+    int insertNotes(Notes notes);
 
     @Delete("Delete * from Notes where noteid=#{noteid}")
     void deleteNote(int noteid);
