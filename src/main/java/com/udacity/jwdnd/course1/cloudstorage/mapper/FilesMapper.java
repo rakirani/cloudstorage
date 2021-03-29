@@ -7,20 +7,20 @@
 
     @Mapper
     public interface FilesMapper {
-        @Select("Select * from Files userId=#{userId} ")
-        List<Files> getAllFiles(int userId);
+        @Select("Select * from Files where userid=#{userid} ")
+        List<Files> getAllFiles(int userid);
 
-        @Select("Select * from Files fileId=#{FileId} ")
-        Files getFile(int FileId);
+        @Select("Select * from Files where fileid=#{Fileid} ")
+        Files getFile(int Fileid);
 
-        @Insert("Insert into Files(fileName,contentType,fileSize,fileData) values(#{fileName},#{contentType},#{fileSize}" +
-                ",#{fileData})")
-        @Options(useGeneratedKeys = true,keyProperty = "fileId")
+        @Insert("Insert into Files(filename,contenttype,filesize,filedata) values(#{filename},#{contenttype},#{filesize}" +
+                ",#{filedata})")
+        @Options(useGeneratedKeys = true,keyProperty = "fileid")
         int insertFile(Files files);
 
-        @Delete("Delete * from files where fileId=#{fileId}")
-        void deleteFile(int fileId);
+        @Delete("Delete * from files where fileid=#{fileid}")
+        void deleteFile(int fileid);
 
-        @Delete("Delete * from files where userId=#{userId}")
-        void deleteAllFiles(int userId);
+        @Delete("Delete * from files where userid=#{userid}")
+        void deleteAllFiles(int userid);
     }

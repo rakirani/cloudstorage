@@ -5,13 +5,13 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserMapper {
-    @Select("Select * from Users where username=#{userName}")
-    Users getUser(String userName);
+    @Select("Select * from Users where username=#{username}")
+    Users getUser(String username);
 
-    @Insert("Insert into Users(userName, salt, password, firstName, lastName) Values(#{userName},#{salt},#{password},#{firstName},#{lastName})")
-    @Options(useGeneratedKeys = true,keyProperty = "userName")
+    @Insert("Insert into Users(username, salt, password, firstname, lastname) Values(#{username},#{salt},#{password},#{firstname},#{lastname})")
+    @Options(useGeneratedKeys = true,keyProperty = "userid")
     int insertUsers(Users users);
 
-    @Delete("Delete * from Users where userName=#{userName}")
-    void deleteUser(String userName);
+    @Delete("Delete * from Users where username=#{username}")
+    void deleteUser(String username);
 }

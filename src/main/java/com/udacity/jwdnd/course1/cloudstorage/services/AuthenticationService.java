@@ -10,36 +10,36 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-    @Service
-    public class AuthenticationService implements AuthenticationProvider {
-        private UserMapper userMapper;
-        private HashService hashService;
+@Service
+public class AuthenticationService implements AuthenticationProvider {
+    private UserMapper userMapper;
+    private HashService hashService;
 
-        public AuthenticationService(UserMapper userMapper, HashService hashService) {
-            this.userMapper = userMapper;
-            this.hashService = hashService;
-        }
-
-        @Override
-        public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-            String username = authentication.getName();
-            String password = authentication.getCredentials().toString();
-
-            Users users = userMapper.getUser(username);
-            if (users != null) {
-                String encodedSalt = users.getSalt();
-                String hashedPassword = hashService.getHashedValue(password, encodedSalt);
-                if (users.getPassword().equals(hashedPassword)) {
-                    return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
-                }
-            }
-
-            return null;
-        }
-
-        @Override
-        public boolean supports(Class<?> authentication) {
-            return authentication.equals(UsernamePasswordAuthenticationToken.class);
-        }
+    public AuthenticationService(UserMapper userMapper, HashService hashService) {
+        this.userMapper = userMapper;
+        this.hashService = hashService;
     }
+
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        String username = authentication.getName();
+        String password = authentication.getCredentials().toString();
+
+        Users users = userMapper.getUser(username);
+        if (users != null) {
+            String encodedSalt = users.getSalt();
+            String hashedPassword = hashService.getHashedValue(password, encodedSalt);
+            if (users.getPassword().equals(hashedPassword)) {
+                return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
+    }
+}
 
