@@ -13,15 +13,14 @@ public interface NotesMapper {
     @Select("Select * from Notes where noteid=#{noteid}")
     Notes getOneNote(int noteid);
 
-    @Insert("Insert into Notes(notetitle,notedescription,userid) values(#{notetitle},#{notedescription},#{userid}) where userid=#{userid}")
+    @Insert("Insert into Notes(notetitle,notedescription,userid) values(#{notetitle},#{notedescription},#{userid})")
     @Options(useGeneratedKeys = true,keyProperty = "noteid")
     int insertNotes(Notes notes);
 
-    @Delete("Delete * from Notes where noteid=#{noteid}")
+    @Delete("Delete from Notes where noteid=#{noteid}")
     void deleteNote(int noteid);
 
-    @Delete("Delete * from Notes where userid=#{userid}")
-    void deleteAllNotes(int userid);
-
+    @Update("Update Notes Set notetitle=#{notetitle}, notedescription =#{description} WHERE noteid =#{noteid}")
+    int updateNote(Notes notes);
 
 }

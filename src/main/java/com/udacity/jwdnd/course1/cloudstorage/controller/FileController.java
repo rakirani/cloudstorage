@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +31,7 @@ public class FileController {
     }
 
     @PostMapping("/fileUpload")
-    public String handleFileUpload(@RequestParam("fileUpload") MultipartFile fileUpload, Authentication authentication, Model model) throws IOException {
+public String handleFileUpload(@RequestParam("fileUpload") MultipartFile fileUpload, Authentication authentication) throws IOException {
         fileService.addFile(fileUpload,userService.getUser(authentication.getName()).getUserid());
         return "redirect:/result?success";
     }
@@ -39,7 +40,6 @@ public class FileController {
     public ResponseEntity<ByteArrayResource> viewFile(@PathVariable("fileid") Integer fileid){
         Files files=fileService.findFile(fileid);
         ByteArrayResource byteArrayResource=new ByteArrayResource(files.getFiledata());
-
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(files.getContenttype())) .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + files.getFilename() + "\"") .body(new ByteArrayResource(files.getFiledata()));
 
        // return ResponseEntity.ok().contentType(new MediaType(files.getContenttype())) .contentLength(Long.parseLong(files.getFilesize())) .body(byteArrayResource);
@@ -47,7 +47,7 @@ public class FileController {
 
     @GetMapping("/delete/{fileid}")
     public String deleteFiles(@PathVariable("fileid")Integer fileid,Authentication authentication){
-        fileService.deleteFile(userService.getUser(authentication.getName()).getUserid());
+        fileService.deleteFile(fileid);
         return "redirect:/result?success";
     }
 

@@ -13,7 +13,7 @@ public interface CredentialsMapper {
     @Select("Select * from Credentials where credentialid=#{credentialid}")
     Credentials getCredentials(int credentialid);
 
-    @Insert("Insert into Credentials(url,username,key,password,userid) values(#{url},#{username},#{key},#{password},#{userid}) where userid=#{userid}")
+    @Insert("Insert into Credentials(url,username,key,password,userid) values(#{url},#{username},#{key},#{password},#{userid})")
     @Options(useGeneratedKeys = true,keyProperty ="credentialid")
     int insertCredentials(Credentials credentials);
 
