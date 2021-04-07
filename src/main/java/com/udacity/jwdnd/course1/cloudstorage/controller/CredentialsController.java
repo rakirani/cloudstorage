@@ -42,6 +42,10 @@ public class CredentialsController {
             System.out.println("added cred");
         }else {
             System.out.println("upfate callinh");
+            Credentials cred = credentialsService.getCredentials(credentials.getCredentialid());
+            credentials.setKey(cred.getKey());
+            credentials.setUsername(cred.getUsername());
+            credentials.setPassword(encryptionService.encryptValue(credentials.getPassword(),credentials.getKey()));
             count = credentialsService.updateCredentials(credentials);
             System.out.println("updated cred");
         }
